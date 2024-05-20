@@ -12,7 +12,7 @@ export const Container = styled.TouchableHighlight`
   background-color: ${({ theme }) => theme.COLORS.GREEN_100};
 `
 
-export const Icon = styled(Material).attrs(({ theme }) => ({
+export const Icon = styled(Material).attrs(() => ({
   size: 24,
 }))`
   position: absolute;
