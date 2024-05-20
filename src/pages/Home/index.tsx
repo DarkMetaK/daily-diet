@@ -1,10 +1,25 @@
-import { Text } from 'react-native'
-import { Container } from './styles'
+import logo from '@/assets/logo.png'
+
+import {
+  Container,
+  Header,
+  Logo,
+} from './styles'
+import { Hero } from './components/Hero'
 
 export function Home() {
   return (
     <Container>
-      <Text>Home</Text>
+      <Header>
+        <Logo source={logo} />
+      </Header>
+
+      <Hero
+        title="90,86%"
+        subtitle="das refeições dentro da dieta"
+        variant="success"
+      />
+
     </Container>
   )
 }
