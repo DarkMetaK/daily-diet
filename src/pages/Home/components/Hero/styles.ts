@@ -22,9 +22,9 @@ export const Icon = styled(Material).attrs(() => ({
 
 export const Title = styled.Text`
   ${({ theme }) => css`
-      color: ${theme.COLORS.GRAY_700};
-      font-family: ${theme.FONT_FAMILY.BOLD};
-      font-size: ${theme.FONT_SIZE['2XL']}px;
+    color: ${theme.COLORS.GRAY_700};
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE['2XL']}px;
   `}
 
   text-align: center;

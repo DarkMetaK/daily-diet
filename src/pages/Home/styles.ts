@@ -19,3 +19,13 @@ export const Logo = styled.Image`
   width: 82px;
   height: 37px;
 `
+
+export const MealListTitle = styled.Text`
+  margin-bottom: 8px;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_700};
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.MD}px;
+  `}
+`
