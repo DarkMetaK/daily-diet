@@ -1,4 +1,5 @@
 import { useTheme } from 'styled-components/native'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Container,
@@ -19,10 +20,15 @@ export function Hero({
   variant = 'success'
 }: HeroProps) {
   const { COLORS } = useTheme()
+  const navigation = useNavigation()
+
+  function handleOpenStats() {
+    navigation.navigate('stats')
+  }
 
   return (
     <Container
-      onPress={() => {}}
+      onPress={handleOpenStats}
       style={variant === 'failure' && {
         backgroundColor: COLORS.RED_100
       }}

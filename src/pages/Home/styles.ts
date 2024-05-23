@@ -20,12 +20,23 @@ export const Logo = styled.Image`
   height: 37px;
 `
 
-export const MealListTitle = styled.Text`
+export const ListTitle = styled.Text`
   margin-bottom: 8px;
 
   ${({ theme }) => css`
     color: ${theme.COLORS.GRAY_700};
     font-family: ${theme.FONT_FAMILY.REGULAR};
     font-size: ${theme.FONT_SIZE.MD}px;
+  `}
+`
+
+export const SectionTitle = styled.Text`
+  margin-top: 32px;
+  margin-bottom: 8px;
+
+  ${({ theme }) => css`
+    color: ${theme.COLORS.GRAY_700};
+    font-family: ${theme.FONT_FAMILY.BOLD};
+    font-size: ${theme.FONT_SIZE.LG}px;
   `}
 `

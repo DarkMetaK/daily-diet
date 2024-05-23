@@ -1,12 +1,12 @@
 import { SectionList } from 'react-native'
-
 import logo from '@/assets/logo.png'
 
 import {
   Container,
   Header,
   Logo,
-  MealListTitle,
+  ListTitle,
+  SectionTitle,
 } from './styles'
 import { Hero } from './components/Hero'
 import { Button } from '@/components/Button'
@@ -15,23 +15,22 @@ import { MealItem } from '@/components/MealItem'
 export function Home() {
   const data = [
     {
-      title: 'Main dishes',
+      title: '12/05/2024',
       data: ['Pizza', 'Burger', 'Risotto'],
     },
     {
-      title: 'Sides',
+      title: '11/05/2024',
       data: ['French Fries', 'Onion Rings', 'Fried Shrimps'],
     },
     {
-      title: 'Drinks',
+      title: '08/05/2024',
       data: ['Water', 'Coke', 'Beer'],
     },
     {
-      title: 'Desserts',
+      title: '07/05/2024',
       data: ['Cheese Cake', 'Ice Cream'],
     },
   ];
-
   return (
     <Container>
       <Header>
@@ -55,18 +54,24 @@ export function Home() {
           />
         )}
         renderSectionHeader={({section: {title}}) => (
-          <></>
+          <SectionTitle>
+            {title}
+          </SectionTitle>
         )}
         ListHeaderComponent={() => (
           <>
-            <MealListTitle>Refeições</MealListTitle>
+            <ListTitle>Refeições</ListTitle>
 
             <Button
               title="Nova Refeição"
               icon="add"
-            />          
+              style={{
+                marginBottom: 8,
+              }}
+            />
           </>
         )}
+        showsVerticalScrollIndicator={false}
       />
 
     </Container>
