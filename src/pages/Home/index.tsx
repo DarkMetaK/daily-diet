@@ -1,4 +1,5 @@
 import { SectionList } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import logo from '@/assets/logo.png'
 
 import {
@@ -13,6 +14,8 @@ import { Button } from '@/components/Button'
 import { MealItem } from '@/components/MealItem'
 
 export function Home() {
+  const navigation = useNavigation()
+
   const data = [
     {
       title: '12/05/2024',
@@ -31,6 +34,11 @@ export function Home() {
       data: ['Cheese Cake', 'Ice Cream'],
     },
   ];
+
+  function handleAddNewMeal() {
+    navigation.navigate('new-meal')
+  }
+
   return (
     <Container>
       <Header>
@@ -68,6 +76,7 @@ export function Home() {
               style={{
                 marginBottom: 8,
               }}
+              onPress={handleAddNewMeal}
             />
           </>
         )}

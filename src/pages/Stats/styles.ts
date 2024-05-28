@@ -31,7 +31,7 @@ export const Subtitle = styled.Text`
   `}
 `
 
-export const ReturnIcon = styled(Material).attrs(({ theme }) => ({
+export const ReturnIcon = styled(Material).attrs(() => ({
   size: 32,
 }))`
   position: absolute;
