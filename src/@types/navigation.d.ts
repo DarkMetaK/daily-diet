@@ -3,7 +3,10 @@ export declare global {
     interface RootParamList {
       home: undefined;
       stats: undefined;
-      'new-meal': undefined;
+      meal: undefined;
+      feedback: {
+        status: 'success' | 'failure'
+      };
     }
   }
 }

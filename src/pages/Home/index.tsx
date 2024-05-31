@@ -36,7 +36,7 @@ export function Home() {
   ];
 
   function handleAddNewMeal() {
-    navigation.navigate('new-meal')
+    navigation.navigate('meal')
   }
 
   return (

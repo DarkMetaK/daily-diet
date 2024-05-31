@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { View } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import { 
   Card,
@@ -13,10 +14,11 @@ import { Calendar } from '@/components/Calendar'
 import { Radio } from '@/components/Radio'
 import { Button } from '@/components/Button'
 
-export function NewMeal() {
+export function Meal() {
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [time, setTime] = useState<Date | undefined>(undefined)
   const [mealFitsTheDiet, setMealFitsTheDiet] = useState<boolean | undefined>(undefined)
+  const navigation = useNavigation()
 
   function handleChangeDate(_: any, selectedDate: Date | undefined) {
     setDate(selectedDate)
@@ -24,6 +26,12 @@ export function NewMeal() {
 
   function handleChangeTime(_: any, selectedTime: Date | undefined) {
     setTime(selectedTime)
+  }
+
+  function handleSubmitMeal() {
+    navigation.navigate('feedback', {
+      status: mealFitsTheDiet ? 'success' : 'failure'
+    })
   }
 
   return (
@@ -84,6 +92,7 @@ export function NewMeal() {
         <Button
           title="Cadastrar refeição"
           style={{ marginTop: 'auto' }}
+          onPress={handleSubmitMeal}
         />
 
       </Card>
