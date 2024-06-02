@@ -1,4 +1,5 @@
 import { TouchableOpacityProps } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   Container,
@@ -19,8 +20,19 @@ export function MealItem({
   status,
   ...rest
 }: MealItemProps) {
+  const navigation = useNavigation()
+
+  function handleOpenMealDetails() {
+    navigation.navigate('details', {
+      id: '1',
+    })
+  }
+
   return (
-    <Container {...rest}>
+    <Container
+      onPress={handleOpenMealDetails}
+      {...rest}
+    >
       <Time>{time}</Time>
 
       <Title>{title}</Title>

@@ -7,6 +7,9 @@ export declare global {
       feedback: {
         status: 'success' | 'failure'
       };
+      details: {
+        id: string
+      };
     }
   }
 }

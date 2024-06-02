@@ -9,19 +9,23 @@ import {
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string
+  variant?: 'primary' | 'secondary'
   icon?: keyof typeof Material.glyphMap
 }
 
-export function Button({ title, icon, ...rest }: ButtonProps) {
+export function Button({ title, variant = 'primary', icon, ...rest }: ButtonProps) {
   return (
-    <Container {...rest}>
+    <Container variant={variant} {...rest}>
       {icon && (
         <Icon
           name={icon}
+          variant={variant}
         />
       )}
 
-      <Title>{title}</Title>
+      <Title variant={variant}>
+        {title}
+      </Title>
     </Container>
   )
 }
