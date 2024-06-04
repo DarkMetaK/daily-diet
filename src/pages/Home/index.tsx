@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react'
-import { SectionList } from 'react-native'
+import { Alert, SectionList } from 'react-native'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 
 import logo from '@/assets/logo.png'
 import { MealProps } from '@/storage/config'
 import { getAllMeals } from '@/storage/meal/getAllMeals'
+import { numberToPercentage } from '@/utils/numberFormatter'
 
 import { Container, Header, Logo, ListTitle, SectionTitle } from './styles'
 import { Hero } from './components/Hero'
@@ -18,8 +19,21 @@ interface MealListProps {
   data: MealProps[]
 }
 
+interface MealStatsProps {
+  total: number
+  successAmount: number
+  failureAmount: number
+  successPercentage: number
+}
+
 export function Home() {
   const [meals, setMeals] = useState<MealListProps[]>([])
+  const [mealStats, setMealStats] = useState<MealStatsProps>({
+    total: 0,
+    successAmount: 0,
+    failureAmount: 0,
+    successPercentage: 0,
+  })
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation()
 
@@ -29,31 +43,50 @@ export function Home() {
         try {
           setIsLoading(true)
           const meals = await getAllMeals()
+          const mealMap = new Map<string, MealProps[]>()
+          const mealStats = {
+            total: 0,
+            successAmount: 0,
+            failureAmount: 0,
+            successPercentage: 0,
+          }
 
-          console.log(JSON.stringify(meals))
-
-          const formattedMeals = meals.reduce((list: MealListProps[], meal) => {
-            const existingDateIndex = list.findIndex(
-              (item) => item.title === meal.date,
-            )
-
-            if (existingDateIndex != -1) {
-              const dateRecords = list[existingDateIndex]
-              dateRecords.data.push(meal)
-
-              list[existingDateIndex] = dateRecords
+          meals.forEach((meal) => {
+            mealStats.total++
+            if (meal.isWithinDiet) {
+              mealStats.successAmount++
             } else {
-              list.push({
-                title: meal.date,
-                data: [meal],
-              })
+              mealStats.failureAmount++
             }
 
-            return list
-          }, [])
+            if (!mealMap.has(meal.date)) {
+              mealMap.set(meal.date, [])
+            }
+            mealMap.get(meal.date)!.push(meal)
+          })
 
-          setMeals(formattedMeals)
+          const formattedMeals: MealListProps[] = Array.from(
+            mealMap,
+            ([title, data]) => ({
+              title,
+              data,
+            }),
+          )
+
+          mealStats.successPercentage =
+            (mealStats.successAmount * 100) / mealStats.total
+
+          setMeals(
+            formattedMeals.sort(
+              (a, b) => dayjs(b.title).unix() - dayjs(a.title).unix(),
+            ),
+          )
+          setMealStats(mealStats)
         } catch (error) {
+          Alert.alert(
+            'Erro',
+            'Um erro inesperado ocorreu ao carregar os dados, por favor tente novamente.',
+          )
           console.log(error)
         } finally {
           setIsLoading(false)
@@ -78,7 +111,7 @@ export function Home() {
       ) : (
         <>
           <Hero
-            title="90,86%"
+            title={numberToPercentage(mealStats.successPercentage)}
             subtitle="das refeições dentro da dieta"
             variant="success"
           />
