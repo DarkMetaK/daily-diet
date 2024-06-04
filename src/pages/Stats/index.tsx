@@ -1,6 +1,7 @@
 import { TouchableOpacity } from 'react-native'
-import { useTheme } from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
+
+import { numberToPercentage } from '@/utils/numberFormatter'
 
 import {
   Card,
@@ -13,43 +14,53 @@ import {
 } from './styles'
 import { StatsCard } from '@/components/StatsCard'
 
+interface MealStatsProps {
+  total: number
+  successAmount: number
+  failureAmount: number
+  successPercentage: number
+}
+
 export function Stats() {
-  const { COLORS } = useTheme()
+  const route = useRoute()
   const navigation = useNavigation()
+
+  const { total, successAmount, failureAmount, successPercentage } =
+    route.params as MealStatsProps
+
+  const mealsWithinDietIsAboveHalf = successPercentage > 50
 
   function handleGoBack() {
     navigation.navigate('home')
   }
 
   return (
-    <Container>
+    <Container isWithinDiet={mealsWithinDietIsAboveHalf}>
       <TouchableOpacity onPress={handleGoBack}>
-        <ReturnIcon name="arrow-back" color={COLORS.GREEN_500} />
+        <ReturnIcon
+          name="arrow-back"
+          isWithinDiet={mealsWithinDietIsAboveHalf}
+        />
       </TouchableOpacity>
 
       <Header>
-        <Title>90,86%</Title>
+        <Title>{numberToPercentage(successPercentage)}</Title>
         <Subtitle>das refeições dentro da dieta</Subtitle>
       </Header>
 
       <Card>
-        <StatsCard
-          title="4"
-          subtitle="melhor sequência de pratos dentro da dieta"
-        />
-
-        <StatsCard title="109" subtitle="refeições registradas" />
+        <StatsCard title={String(total)} subtitle="refeições registradas" />
 
         <Column>
           <StatsCard
-            title="32"
+            title={String(successAmount)}
             subtitle="refeições dentro da dieta"
             variant="success"
             style={{ width: '50%' }}
           />
 
           <StatsCard
-            title="77"
+            title={String(failureAmount)}
             subtitle="refeições fora da dieta"
             variant="failure"
             style={{ width: '50%' }}

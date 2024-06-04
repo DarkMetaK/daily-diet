@@ -2,11 +2,16 @@ import styled, { css } from 'styled-components/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Material from '@expo/vector-icons/MaterialIcons'
 
-export const Container = styled(SafeAreaView)`
+interface SuccessProps {
+  isWithinDiet: boolean
+}
+
+export const Container = styled(SafeAreaView)<SuccessProps>`
   flex: 1;
   padding: 32px 0 0;
 
-  background-color: ${({ theme }) => theme.COLORS.GREEN_100};
+  background-color: ${({ theme, isWithinDiet }) =>
+    isWithinDiet ? theme.COLORS.GREEN_100 : theme.COLORS.RED_100};
 `
 
 export const Header = styled.View`
@@ -31,9 +36,12 @@ export const Subtitle = styled.Text`
   `}
 `
 
-export const ReturnIcon = styled(Material).attrs(() => ({
-  size: 32,
-}))`
+export const ReturnIcon = styled(Material).attrs<SuccessProps>(
+  ({ isWithinDiet, theme }) => ({
+    color: isWithinDiet ? theme.COLORS.GREEN_500 : theme.COLORS.RED_500,
+    size: 32,
+  }),
+)`
   position: absolute;
   left: 24px;
 `

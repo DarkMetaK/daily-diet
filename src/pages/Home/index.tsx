@@ -6,7 +6,6 @@ import dayjs from 'dayjs'
 import logo from '@/assets/logo.png'
 import { MealProps } from '@/storage/config'
 import { getAllMeals } from '@/storage/meal/getAllMeals'
-import { numberToPercentage } from '@/utils/numberFormatter'
 
 import { Container, Header, Logo, ListTitle, SectionTitle } from './styles'
 import { Hero } from './components/Hero'
@@ -110,11 +109,7 @@ export function Home() {
         <Loading />
       ) : (
         <>
-          <Hero
-            title={numberToPercentage(mealStats.successPercentage)}
-            subtitle="das refeições dentro da dieta"
-            variant="success"
-          />
+          <Hero stats={mealStats} />
 
           <SectionList
             sections={meals}
