@@ -9,23 +9,15 @@ interface RadioProps extends TouchableOpacityProps {
 
 export function Radio({
   title,
-  status = "success",
+  status = 'success',
   selected = false,
-  ...rest 
+  ...rest
 }: RadioProps) {
   return (
-    <Container
-      status={status}
-      selected={selected}
-      {...rest}
-    >
-      <Status
-        status={status}
-      />
+    <Container status={status} selected={selected} {...rest}>
+      <Status status={status} />
 
-      <Title>
-        {title}
-      </Title>
+      <Title>{title}</Title>
     </Container>
   )
 }

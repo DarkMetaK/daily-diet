@@ -23,15 +23,14 @@ export const Container = styled.TouchableOpacity<ContainerProps>`
   ${({ theme, status, selected }) => {
     if (selected) {
       return css`
-        background-color: ${
-          status === 'success' ? theme.COLORS.GREEN_100 : theme.COLORS.RED_100
-        };
-        border-color: ${
-          status === 'success' ? theme.COLORS.GREEN_500 : theme.COLORS.RED_500
-        };
-    `
-    }
-    else {
+        background-color: ${status === 'success'
+          ? theme.COLORS.GREEN_100
+          : theme.COLORS.RED_100};
+        border-color: ${status === 'success'
+          ? theme.COLORS.GREEN_500
+          : theme.COLORS.RED_500};
+      `
+    } else {
       return css`
         background-color: ${theme.COLORS.GRAY_200};
         border-color: transparent;
@@ -45,9 +44,8 @@ export const Status = styled.View<StatusProps>`
   height: 8px;
   border-radius: 9999px;
 
-  background-color: ${({ theme, status }) => 
-    status === 'success' ? theme.COLORS.GREEN_500 : theme.COLORS.RED_500
-  };
+  background-color: ${({ theme, status }) =>
+    status === 'success' ? theme.COLORS.GREEN_500 : theme.COLORS.RED_500};
 `
 
 export const Title = styled.Text`

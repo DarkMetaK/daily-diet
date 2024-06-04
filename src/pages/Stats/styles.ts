@@ -4,7 +4,7 @@ import Material from '@expo/vector-icons/MaterialIcons'
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
-  padding: 32px 0 0 ;
+  padding: 32px 0 0;
 
   background-color: ${({ theme }) => theme.COLORS.GREEN_100};
 `

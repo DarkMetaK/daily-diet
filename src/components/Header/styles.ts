@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const ReturnIcon = styled(Material).attrs(({ theme }) => ({
   size: 24,
-  color: theme.COLORS.GRAY_600
+  color: theme.COLORS.GRAY_600,
 }))``
 
 export const Title = styled.Text`

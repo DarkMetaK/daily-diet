@@ -42,7 +42,6 @@ export const StatusIndicator = styled.View<StatusIndicatorProps>`
   width: 14px;
   height: 14px;
   border-radius: 9999px;
-  background-color: ${({ theme, status }) => 
-    status === 'success' ? theme.COLORS.GREEN_300 : theme.COLORS.RED_300
-  };
+  background-color: ${({ theme, status }) =>
+    status === 'success' ? theme.COLORS.GREEN_300 : theme.COLORS.RED_300};
 `

@@ -9,7 +9,7 @@ export async function getAllMeals(): Promise<MealProps[]> {
     if (response) {
       return JSON.parse(response)
     }
-    
+
     return []
   } catch (error) {
     throw error

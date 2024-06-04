@@ -3,17 +3,20 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
-  padding: 32px 0 0 ;
+  padding: 32px 0 0;
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_300};
 `
 
-export const Card = styled.View`
-  flex: 1;
+export const Card = styled.ScrollView.attrs(() => ({
+  contentContainerStyle: {
+    flexGrow: 1,
+    gap: 16,
+  },
+}))`
   margin-top: 32px;
   padding: 32px 24px;
   border-radius: 20px 20px 0 0;
-  gap: 24px;
 
   background-color: ${({ theme }) => theme.COLORS.GRAY_100};
 `

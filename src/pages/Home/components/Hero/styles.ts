@@ -32,9 +32,9 @@ export const Title = styled.Text`
 
 export const Subtitle = styled.Text`
   ${({ theme }) => css`
-      color: ${theme.COLORS.GRAY_600};
-      font-family: ${theme.FONT_FAMILY.REGULAR};
-      font-size: ${theme.FONT_SIZE.SM}px;
+    color: ${theme.COLORS.GRAY_600};
+    font-family: ${theme.FONT_FAMILY.REGULAR};
+    font-size: ${theme.FONT_SIZE.SM}px;
   `}
 
   text-align: center;

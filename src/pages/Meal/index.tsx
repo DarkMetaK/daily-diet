@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { useForm, Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import z from 'zod'
 import dayjs from 'dayjs'
 
-import { 
-  Card,
-  Column,
-  Container,
-  Text
-} from './styles'
+import { Card, Column, Container, Text } from './styles'
 import { Header } from '@/components/Header'
 import { Input } from '@/components/Input'
 import { Calendar } from '@/components/Calendar'
@@ -16,46 +13,61 @@ import { Radio } from '@/components/Radio'
 import { Button } from '@/components/Button'
 import { postMeal } from '@/storage/meal/postMeal'
 
+const mealForm = z
+  .object({
+    name: z
+      .string({ required_error: 'O nome é obrigatório.' })
+      .trim()
+      .min(1, 'O nome é obrigatório.'),
+    description: z.string().trim().optional(),
+    date: z.date({ required_error: 'A data é obrigatória.' }),
+    time: z.date({ required_error: 'O horário é obrigatório.' }),
+    isWithinDiet: z.boolean(),
+  })
+  .required()
+
+type MealForm = z.infer<typeof mealForm>
+
 export function Meal() {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [date, setDate] = useState<Date | undefined>(undefined)
-  const [time, setTime] = useState<Date | undefined>(undefined)
-  const [isWithinDiet, setIsWithinDiet] = useState<boolean>(true)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const {
+    control,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    reset,
+  } = useForm<MealForm>({
+    resolver: zodResolver(mealForm),
+    defaultValues: {
+      name: '',
+      description: '',
+      date: undefined,
+      time: undefined,
+      isWithinDiet: true,
+    },
+  })
   const navigation = useNavigation()
 
-  async function handleSubmitMeal() {
-    if (!name.trim().length || !description.trim().length || !date || !time) {
-      return
-    }
-
+  async function handleSubmitMeal(data: MealForm) {
     try {
-      setIsSubmitting(true)
       await postMeal({
         id: Date.now().toString(),
-        name: name,
-        description: description,
-        date: dayjs(date).startOf('day').toISOString(),
-        time: time.toISOString(),
-        isWithinDiet: isWithinDiet
+        name: data.name,
+        description: data.description,
+        date: dayjs(data.date).startOf('day').toISOString(),
+        time: data.time.toISOString(),
+        isWithinDiet: data.isWithinDiet,
       })
 
+      reset()
       navigation.navigate('feedback', {
-        status: isWithinDiet ? 'success' : 'failure'
+        status: data.isWithinDiet ? 'success' : 'failure',
       })
     } catch (error) {
-      setIsSubmitting(false)
+      Alert.alert(
+        'Erro',
+        'Um erro inesperado ocorreu, por favor tente novamente.',
+      )
       console.log(error)
     }
-  }
-
-  function handleChangeDate(_: any, selectedDate: Date | undefined) {
-    setDate(selectedDate)
-  }
-
-  function handleChangeTime(_: any, selectedTime: Date | undefined) {
-    setTime(selectedTime)
   }
 
   return (
@@ -63,37 +75,67 @@ export function Meal() {
       <Header title="Nova refeição" />
 
       <Card>
-        <Input
-          label="Nome"
-          value={name}
-          onChangeText={setName}
+        <Controller
+          control={control}
+          name="name"
+          render={({ field }) => (
+            <Input
+              label="Nome*"
+              value={field.value}
+              onChangeText={field.onChange}
+              onBlur={field.onBlur}
+              error={errors.name?.message}
+            />
+          )}
         />
 
-        <Input
-          label="Descrição"
-          value={description}
-          onChangeText={setDescription}
-          multiline
-          numberOfLines={5}
-          textAlignVertical="top"
+        <Controller
+          control={control}
+          name="description"
+          render={({ field }) => (
+            <Input
+              label="Descrição"
+              value={field.value}
+              onChangeText={field.onChange}
+              onBlur={field.onBlur}
+              multiline
+              numberOfLines={5}
+              textAlignVertical="top"
+              error={errors.description?.message}
+            />
+          )}
         />
 
         <Column>
-          <Calendar
-            id="date-input"
-            inputValue={date}
-            onChange={handleChangeDate}
-            label="Data"
-            style={{ width: '47%' }}
+          <Controller
+            control={control}
+            name="date"
+            render={({ field }) => (
+              <Calendar
+                id="date-input"
+                label="Data*"
+                inputValue={field.value}
+                onChange={(_, date) => field.onChange(date)}
+                style={{ width: '47%' }}
+                error={errors.date?.message}
+              />
+            )}
           />
 
-          <Calendar
-            id="time-input"
-            inputValue={time}
-            onChange={handleChangeTime}
-            mode="time"
-            label="Hora"
-            style={{ width: '47%' }}
+          <Controller
+            control={control}
+            name="time"
+            render={({ field }) => (
+              <Calendar
+                id="time-input"
+                label="Hora*"
+                inputValue={field.value}
+                onChange={(_, date) => field.onChange(date)}
+                mode="time"
+                style={{ width: '47%' }}
+                error={errors.time?.message}
+              />
+            )}
           />
         </Column>
 
@@ -101,30 +143,41 @@ export function Meal() {
           <Text>Está dentro da dieta?</Text>
 
           <Column>
-            <Radio
-              title="Sim"
-              selected={isWithinDiet}
-              onPress={() => setIsWithinDiet(true)}
-              style={{ width: '47%' }}
+            <Controller
+              control={control}
+              name="isWithinDiet"
+              render={({ field }) => (
+                <Radio
+                  title="Sim"
+                  selected={field.value}
+                  onPress={() => field.onChange(true)}
+                  style={{ width: '47%' }}
+                />
+              )}
             />
 
-            <Radio
-              title="Não"
-              status="failure"
-              selected={isWithinDiet === false}
-              onPress={() => setIsWithinDiet(false)}
-              style={{ width: '47%' }}
+            <Controller
+              control={control}
+              name="isWithinDiet"
+              render={({ field }) => (
+                <Radio
+                  title="Não"
+                  status="failure"
+                  selected={!field.value}
+                  onPress={() => field.onChange(false)}
+                  style={{ width: '47%' }}
+                />
+              )}
             />
-          </Column>        
+          </Column>
         </View>
 
         <Button
           title="Cadastrar refeição"
           style={{ marginTop: 'auto' }}
           disabled={isSubmitting}
-          onPress={handleSubmitMeal}
+          onPress={handleSubmit(handleSubmitMeal)}
         />
-
       </Card>
     </Container>
   )

@@ -1,24 +1,15 @@
 import { useTheme } from 'styled-components/native'
 import { useNavigation } from '@react-navigation/native'
 
-import {
-  Container,
-  Icon,
-  Title,
-  Subtitle
-} from './styles'
+import { Container, Icon, Title, Subtitle } from './styles'
 
 interface HeroProps {
   variant?: 'success' | 'failure'
-  title: string,
-  subtitle: string,
+  title: string
+  subtitle: string
 }
 
-export function Hero({ 
-  title,
-  subtitle,
-  variant = 'success'
-}: HeroProps) {
+export function Hero({ title, subtitle, variant = 'success' }: HeroProps) {
   const { COLORS } = useTheme()
   const navigation = useNavigation()
 
@@ -29,20 +20,22 @@ export function Hero({
   return (
     <Container
       onPress={handleOpenStats}
-      style={variant === 'failure' && {
-        backgroundColor: COLORS.RED_100
-      }}
+      style={
+        variant === 'failure' && {
+          backgroundColor: COLORS.RED_100,
+        }
+      }
       underlayColor={variant === 'failure' ? COLORS.RED_300 : COLORS.GREEN_300}
     >
       <>
         <Icon
           name="arrow-outward"
-          color={variant === 'success' ? COLORS.GREEN_500 : COLORS.RED_500 }
+          color={variant === 'success' ? COLORS.GREEN_500 : COLORS.RED_500}
         />
 
         <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>          
+        <Subtitle>{subtitle}</Subtitle>
       </>
-    </Container>      
+    </Container>
   )
 }

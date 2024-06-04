@@ -11,11 +11,12 @@ export const Container = styled.View<ContainerProps>`
   align-items: center;
   gap: 8px;
 
-  background-color: ${({ theme, variant }) => 
-    variant === 'default' ? theme.COLORS.GRAY_200
-    : variant === 'success' ? theme.COLORS.GREEN_100
-    : theme.COLORS.RED_100
-  };
+  background-color: ${({ theme, variant }) =>
+    variant === 'default'
+      ? theme.COLORS.GRAY_200
+      : variant === 'success'
+        ? theme.COLORS.GREEN_100
+        : theme.COLORS.RED_100};
 `
 
 export const Title = styled.Text`

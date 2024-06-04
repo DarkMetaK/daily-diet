@@ -2,14 +2,14 @@ import { TouchableOpacity } from 'react-native'
 import { useTheme } from 'styled-components'
 import { useNavigation } from '@react-navigation/native'
 
-import { 
+import {
   Card,
   Column,
-  Container, 
-  Header, 
-  ReturnIcon, 
-  Subtitle, 
-  Title
+  Container,
+  Header,
+  ReturnIcon,
+  Subtitle,
+  Title,
 } from './styles'
 import { StatsCard } from '@/components/StatsCard'
 
@@ -24,15 +24,12 @@ export function Stats() {
   return (
     <Container>
       <TouchableOpacity onPress={handleGoBack}>
-        <ReturnIcon
-          name="arrow-back"
-          color={COLORS.GREEN_500}
-        />
+        <ReturnIcon name="arrow-back" color={COLORS.GREEN_500} />
       </TouchableOpacity>
 
       <Header>
         <Title>90,86%</Title>
-        <Subtitle>das refeições dentro da dieta</Subtitle>        
+        <Subtitle>das refeições dentro da dieta</Subtitle>
       </Header>
 
       <Card>
@@ -41,10 +38,7 @@ export function Stats() {
           subtitle="melhor sequência de pratos dentro da dieta"
         />
 
-        <StatsCard
-          title="109"
-          subtitle="refeições registradas"
-        />
+        <StatsCard title="109" subtitle="refeições registradas" />
 
         <Column>
           <StatsCard
@@ -61,9 +55,7 @@ export function Stats() {
             style={{ width: '50%' }}
           />
         </Column>
-
       </Card>
-
     </Container>
   )
 }

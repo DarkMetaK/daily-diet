@@ -7,7 +7,7 @@ interface TitleProps {
 
 export const Container = styled(SafeAreaView)`
   flex: 1;
-  padding: 32px 0 0 ;
+  padding: 32px 0 0;
   align-items: center;
   justify-content: center;
 
@@ -18,9 +18,9 @@ export const Title = styled.Text<TitleProps>`
   margin-bottom: 8px;
 
   ${({ theme, status }) => css`
-    color: ${
-      status === 'success' ? theme.COLORS.GREEN_500: theme.COLORS.RED_500
-    };
+    color: ${status === 'success'
+      ? theme.COLORS.GREEN_500
+      : theme.COLORS.RED_500};
     font-family: ${theme.FONT_FAMILY.BOLD};
     font-size: ${theme.FONT_SIZE.XL}px;
   `}

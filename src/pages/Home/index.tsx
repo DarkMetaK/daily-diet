@@ -7,20 +7,14 @@ import logo from '@/assets/logo.png'
 import { MealProps } from '@/storage/config'
 import { getAllMeals } from '@/storage/meal/getAllMeals'
 
-import {
-  Container,
-  Header,
-  Logo,
-  ListTitle,
-  SectionTitle,
-} from './styles'
+import { Container, Header, Logo, ListTitle, SectionTitle } from './styles'
 import { Hero } from './components/Hero'
 import { Button } from '@/components/Button'
 import { MealItem } from '@/components/MealItem'
 import { Loading } from '@/components/Loading'
 
 interface MealListProps {
-  title: String
+  title: string
   data: MealProps[]
 }
 
@@ -29,41 +23,45 @@ export function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation()
 
-  useFocusEffect(useCallback(() => {
-    async function fetchMeals() {
-      try {
-        setIsLoading(true)
-        const meals = await getAllMeals()
+  useFocusEffect(
+    useCallback(() => {
+      async function fetchMeals() {
+        try {
+          setIsLoading(true)
+          const meals = await getAllMeals()
 
-        console.log(JSON.stringify(meals))
+          console.log(JSON.stringify(meals))
 
-        const formattedMeals = meals.reduce((list: MealListProps[], meal) => {
-          const existingDateIndex = list.findIndex((item) => item.title === meal.date)
+          const formattedMeals = meals.reduce((list: MealListProps[], meal) => {
+            const existingDateIndex = list.findIndex(
+              (item) => item.title === meal.date,
+            )
 
-          if (existingDateIndex != -1) {
-            const dateRecords = list[existingDateIndex]
-            dateRecords.data.push(meal)
+            if (existingDateIndex != -1) {
+              const dateRecords = list[existingDateIndex]
+              dateRecords.data.push(meal)
 
-            list[existingDateIndex] = dateRecords
-          } else {
-            list.push({
-              title: meal.date,
-              data: [meal]
-            })
-          }
+              list[existingDateIndex] = dateRecords
+            } else {
+              list.push({
+                title: meal.date,
+                data: [meal],
+              })
+            }
 
-          return list
-        }, [])
+            return list
+          }, [])
 
-        setMeals(formattedMeals)
-      } catch(error) {
-        console.log(error)
-      } finally {
-        setIsLoading(false)
-      }     
-    }
-    fetchMeals()
-    }, []))
+          setMeals(formattedMeals)
+        } catch (error) {
+          console.log(error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      fetchMeals()
+    }, []),
+  )
 
   function handleAddNewMeal() {
     navigation.navigate('meal')
@@ -75,7 +73,9 @@ export function Home() {
         <Logo source={logo} />
       </Header>
 
-      {isLoading ? <Loading /> : (
+      {isLoading ? (
+        <Loading />
+      ) : (
         <>
           <Hero
             title="90,86%"
@@ -86,7 +86,7 @@ export function Home() {
           <SectionList
             sections={meals}
             keyExtractor={(item) => item.id}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <MealItem
                 id={item.id}
                 title={item.name}
@@ -94,10 +94,8 @@ export function Home() {
                 status={item.isWithinDiet ? 'success' : 'failure'}
               />
             )}
-            renderSectionHeader={({section: {title}}) => (
-              <SectionTitle>
-                {dayjs(title).format('DD/MM/YY')}
-              </SectionTitle>
+            renderSectionHeader={({ section: { title } }) => (
+              <SectionTitle>{dayjs(title).format('DD/MM/YY')}</SectionTitle>
             )}
             ListHeaderComponent={() => (
               <>
@@ -114,9 +112,11 @@ export function Home() {
               </>
             )}
             ListEmptyComponent={() => (
-              <ListTitle style={{
-                textAlign: 'center',
-              }}>
+              <ListTitle
+                style={{
+                  textAlign: 'center',
+                }}
+              >
                 Comece adicionando uma nova refeição!
               </ListTitle>
             )}

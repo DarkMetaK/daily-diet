@@ -2,12 +2,7 @@ import { TouchableOpacityProps } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import dayjs from 'dayjs'
 
-import {
-  Container,
-  StatusIndicator,
-  Time,
-  Title
-} from './styles'
+import { Container, StatusIndicator, Time, Title } from './styles'
 
 interface MealItemProps extends TouchableOpacityProps {
   id: string
@@ -16,13 +11,7 @@ interface MealItemProps extends TouchableOpacityProps {
   status: 'success' | 'failure'
 }
 
-export function MealItem({
-  id,
-  title,
-  time,
-  status,
-  ...rest
-}: MealItemProps) {
+export function MealItem({ id, title, time, status, ...rest }: MealItemProps) {
   const navigation = useNavigation()
 
   function handleOpenMealDetails() {
@@ -32,10 +21,7 @@ export function MealItem({
   }
 
   return (
-    <Container
-      onPress={handleOpenMealDetails}
-      {...rest}
-    >
+    <Container onPress={handleOpenMealDetails} {...rest}>
       <Time>{dayjs(time).format('HH:mm')}</Time>
 
       <Title>{title}</Title>

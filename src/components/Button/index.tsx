@@ -1,11 +1,7 @@
 import { TouchableOpacityProps } from 'react-native'
 import Material from '@expo/vector-icons/MaterialIcons'
 
-import {
-  Container,
-  Icon,
-  Title
-} from './styles'
+import { Container, Icon, Title } from './styles'
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string
@@ -13,19 +9,17 @@ interface ButtonProps extends TouchableOpacityProps {
   icon?: keyof typeof Material.glyphMap
 }
 
-export function Button({ title, variant = 'primary', icon, ...rest }: ButtonProps) {
+export function Button({
+  title,
+  variant = 'primary',
+  icon,
+  ...rest
+}: ButtonProps) {
   return (
     <Container variant={variant} {...rest}>
-      {icon && (
-        <Icon
-          name={icon}
-          variant={variant}
-        />
-      )}
+      {icon && <Icon name={icon} variant={variant} />}
 
-      <Title variant={variant}>
-        {title}
-      </Title>
+      <Title variant={variant}>{title}</Title>
     </Container>
   )
 }

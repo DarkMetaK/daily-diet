@@ -7,11 +7,10 @@ interface ContainerProps {
 
 export const Container = styled(SafeAreaView)<ContainerProps>`
   flex: 1;
-  padding: 32px 0 0 ;
+  padding: 32px 0 0;
 
-  background-color: ${({ theme, status }) => 
-      status === 'success' ? theme.COLORS.GREEN_100: theme.COLORS.RED_100
-    };
+  background-color: ${({ theme, status }) =>
+    status === 'success' ? theme.COLORS.GREEN_100 : theme.COLORS.RED_100};
 `
 
 export const Card = styled.View`
@@ -52,4 +51,3 @@ export const Text = styled.Text`
     font-size: ${theme.FONT_SIZE.MD}px;
   `}
 `
-

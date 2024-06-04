@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
-import { 
+import {
   useFonts,
   Nunito_400Regular,
   Nunito_700Bold,
@@ -19,21 +19,11 @@ export default function App() {
 
   return (
     <>
-      <StatusBar
-        style="dark"
-        backgroundColor="transparent"
-        translucent
-      />
+      <StatusBar style="dark" backgroundColor="transparent" translucent />
 
       <ThemeProvider theme={light}>
-      {
-          fontsLoaded ? (
-            <Routes />
-          ) : (
-            <Loading />
-          )
-        }
-      </ThemeProvider>    
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </ThemeProvider>
     </>
   )
 }

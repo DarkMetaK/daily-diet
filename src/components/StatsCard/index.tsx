@@ -1,10 +1,6 @@
 import { ViewProps } from 'react-native'
 
-import { 
-  Container,
-  Subtitle,
-  Title 
-} from './styles'
+import { Container, Subtitle, Title } from './styles'
 
 interface StatsCardProps extends ViewProps {
   title: string
@@ -12,7 +8,12 @@ interface StatsCardProps extends ViewProps {
   variant?: 'default' | 'success' | 'failure'
 }
 
-export function StatsCard({ title, subtitle, variant='default', ...rest }: StatsCardProps) {
+export function StatsCard({
+  title,
+  subtitle,
+  variant = 'default',
+  ...rest
+}: StatsCardProps) {
   return (
     <Container variant={variant} {...rest}>
       <Title>{title}</Title>
