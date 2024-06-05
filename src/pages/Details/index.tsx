@@ -14,6 +14,7 @@ import { Card, Container, Subtitle, Text, Title } from './styles'
 import { Header } from '@/components/Header'
 import { Button } from '@/components/Button'
 import { Loading } from '@/components/Loading'
+import { deleteMealById } from '@/storage/meal/deleteMealById'
 
 export function Details() {
   const [mealItem, setMealItem] = useState<MealProps>({} as MealProps)
@@ -63,7 +64,18 @@ export function Details() {
       {
         text: 'Sim',
         style: 'destructive',
-        onPress: () => {},
+        onPress: async () => {
+          try {
+            await deleteMealById(id)
+            navigation.navigate('home')
+          } catch (error) {
+            Alert.alert(
+              'Erro',
+              'Um erro inesperado ocorreu ao tentar remover, por favor tente novamente.',
+            )
+            console.log(error)
+          }
+        },
       },
     ])
   }
