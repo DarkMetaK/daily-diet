@@ -73,7 +73,7 @@ export function Home() {
           )
 
           mealStats.successPercentage =
-            (mealStats.successAmount * 100) / mealStats.total
+            ((mealStats.successAmount * 100) / mealStats.total) | 0
 
           setMeals(
             formattedMeals.sort(

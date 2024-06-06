@@ -3,6 +3,7 @@ export function numberToPercentage(n: number): string {
     n.toLocaleString('pt-BR', {
       minimumIntegerDigits: 2,
       minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     }) + '%'
   )
 }
